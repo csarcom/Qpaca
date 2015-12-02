@@ -2,7 +2,7 @@ import falcon
 
 from pubsub.middleware import JSONTranslator, RequireJSON
 from pubsub.resource import PublishResource
-from pubsub.backend import RabbitMQ
+from pubsub.backend.rabbitmq import RabbitMQ
 
 
 app = falcon.API(middleware=[
