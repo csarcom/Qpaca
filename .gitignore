@@ -2,3 +2,5 @@
 __pycache__
 .cache
 pubsub/.cache
+tests/.cache
+tests/__pycache__
