@@ -10,13 +10,20 @@ Build docker container python-pubsub::
 
 	docker build -t python-pubsub .
 
+Pulling and Starting RabbitMQ::
+
+	docker pull rabbitmq:3-management
+	docker run -it -p 15672:15672 rabbitmq:3-management
+
+You can access now RabbitMQ Management using http://localhost:15672 using credentials: guest/guest
+
 Running with Docker::
 
-	docker run -it -p 8000:8000 -v /$(pwd):/app python-pubsub
+	docker run -it -p 8000:8000 --link my_rabbitmq:my_rabbitmq -v /$(pwd):/app csarcom/python-pubsub
 
 Running tests::
 
-	docker run -it -p 8000:8000 -v /$(pwd):/app python-pubsub bash
+	docker run -it -v /$(pwd):/app csarcom/python-pubsub bash
 	py.test pubsub/test
 
 
