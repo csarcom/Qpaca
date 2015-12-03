@@ -1,5 +1,7 @@
 FROM python:3.5
 
+MAINTAINER Charles Sartori <charles.sartori@gmail.com>
+
 # Copy everything to /app
 COPY . /app
 
