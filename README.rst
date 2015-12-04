@@ -17,6 +17,10 @@ Pulling and Starting RabbitMQ::
 
 You can access now RabbitMQ Management using http://localhost:15672 using credentials: guest/guest
 
+Pulling python-pubsub image::
+
+	docker pull csarcom/python-pubsub:latest
+
 Running with Docker::
 
 	docker run -it -p 8000:8000 --link my_rabbitmq:my_rabbitmq -v /$(pwd):/app csarcom/python-pubsub
@@ -24,7 +28,7 @@ Running with Docker::
 Running tests::
 
 	docker run -it -v /$(pwd):/app csarcom/python-pubsub bash
-	py.test pubsub/test
+	py.test pubsub/tests
 
 
 =======
