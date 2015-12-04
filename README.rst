@@ -13,7 +13,7 @@ Build docker container python-pubsub::
 Pulling and Starting RabbitMQ::
 
 	docker pull rabbitmq:3-management
-	docker run -it -p 15672:15672 rabbitmq:3-management
+	docker run -d --name my_rabbitmq -p 15672:15672 rabbitmq:3-management
 
 You can access now RabbitMQ Management using http://localhost:15672 using credentials: guest/guest
 
