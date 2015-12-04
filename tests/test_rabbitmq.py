@@ -35,7 +35,7 @@ class TestRabbitMQPublisher(object):
 
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._connect')
     def test_call_connect(self, mocked_function):
-        self.publisher.start()
+        RabbitMQPublisher()
         assert mocked_function.called
 
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._create_exchange')
