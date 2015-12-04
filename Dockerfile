@@ -9,7 +9,7 @@ COPY . /app
 WORKDIR /app
 
 # Installing requirements
-RUN pip install -r /app/requirements.txt
+RUN pip3.5 install -r /app/requirements.txt
 
 # Expose ports
 EXPOSE 8000
