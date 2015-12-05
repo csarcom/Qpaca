@@ -44,7 +44,6 @@ class RabbitMQPublisher(object):
 
         self._producer.publish(
             message, exchange=self._exchange, **self.config.get('publish'))
-        print ('Message sent')
         return message_id
 
     def _create_producer(self):
@@ -99,5 +98,4 @@ class RabbitMQSubscriber(ConsumerMixin):
         return queue
 
     def on_message(self, body, message):
-        print ('Got message: {0}'.format(body))
         message.ack()

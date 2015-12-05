@@ -6,9 +6,10 @@ python-pubsub
 Build and Run
 =============
 
-Build docker container python-pubsub::
+We can run python-pubsub using normal docker containers or docker-compose
 
-	docker build -t python-pubsub .
+Docker Containers
+-----------------
 
 Pulling and Starting RabbitMQ::
 
@@ -17,18 +18,28 @@ Pulling and Starting RabbitMQ::
 
 You can access now RabbitMQ Management using http://localhost:15672 using credentials: guest/guest
 
-Pulling python-pubsub image::
+Pulling and Starting python-pubsub image::
 
 	docker pull csarcom/python-pubsub:latest
-
-Running with Docker::
-
 	docker run -it -p 8000:8000 --link my_rabbitmq:my_rabbitmq -v /$(pwd):/app csarcom/python-pubsub
 
-Running tests::
+Docker Compose
+--------------
+
+	docker-compose up
+
+Running tests
+-------------
 
 	docker run -it -v /$(pwd):/app csarcom/python-pubsub bash
 	py.test pubsub/tests
+
+Build python-pubsub
+-------------------
+
+Build docker container python-pubsub, you just need to do this if you want do update/create a new image::
+
+	docker build -t python-pubsub .
 
 
 =======

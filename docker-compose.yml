@@ -1,0 +1,13 @@
+pubsub:
+    image: csarcom/python-pubsub
+    ports:
+        - "8000:8000"
+    links:
+        - rabbitmq
+    volumes:
+        - ./:/app
+rabbitmq:
+    container_name: my_rabbitmq
+    image: rabbitmq:3-management
+    ports:
+        - "15672:15672"
