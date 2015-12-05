@@ -37,8 +37,7 @@ class TestRabbitMQ(object):
 class TestRabbitMQPublisher(object):
 
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._connect')
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._connect')
-    def setup_class(self, mock1, mock2):
+    def setup_class(self, mock1):
         self.publisher = RabbitMQPublisher()
 
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._connect')
@@ -64,9 +63,8 @@ class TestRabbitMQPublisher(object):
 
 class TestRabbitMQSubscriber(object):
 
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._connect')
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._connect')
-    def setup_class(self, mock1, mock2):
+    def setup_class(self, mock1):
         self.subscriber = RabbitMQSubscriber()
 
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._connect')
