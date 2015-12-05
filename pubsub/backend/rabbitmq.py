@@ -9,12 +9,14 @@ import gevent
 from kombu.mixins import ConsumerMixin
 
 from pubsub.backend.base import BaseBackend
+from pubsub.helpers import get_config
 
 
 class RabbitMQ(BaseBackend):
     def __init__(self, *args, **kwargs):
-        self.publisher = RabbitMQPublisher()
-        self.subscriber = RabbitMQSubscriber()
+        config = get_config('rabbitmq')
+        self.publisher = RabbitMQPublisher(config.get('publisher', None))
+        self.subscriber = RabbitMQSubscriber(config.get('subscriber', None))
 
     def start(self):
         self.publisher.start()
@@ -26,10 +28,8 @@ class RabbitMQ(BaseBackend):
 
 
 class RabbitMQPublisher(object):
-    def __init__(self, *args, **kwargs):
-        self.exchange_name = 'python-pubsub'
-        self.amqp_address = 'amqp://guest:guest@my_rabbitmq:5672//'
-        self.routing_key = 'pubsub'
+    def __init__(self, config):
+        self.config = config
         self._connection = self._connect()
 
     def start(self):
@@ -43,8 +43,7 @@ class RabbitMQPublisher(object):
                    'reply_to': None}
 
         self._producer.publish(
-            message, exchange=self._exchange, routing_key=self.routing_key,
-            serializer='json', compression='zlib', retry=True)
+            message, exchange=self._exchange, **self.config.get('publish'))
         print ('Message sent')
         return message_id
 
@@ -53,27 +52,19 @@ class RabbitMQPublisher(object):
 
     def _create_exchange(self):
         exchange = kombu.Exchange(
-            self.exchange_name,
-            type='direct',
-            durable=True, auto_delete=False)(self._connection)
+            **self.config.get('exchange'))(self._connection)
         exchange.declare()
         return exchange
 
     def _connect(self):
-        connection = kombu.Connection(
-            self.amqp_address,
-            transport_options={'confirm_publish': True},
-            failover_strategy='round-robin')
+        connection = kombu.Connection(**self.config.get('connection'))
         connection.ensure_connection()
         return connection
 
 
 class RabbitMQSubscriber(ConsumerMixin):
-    def __init__(self, *args, **kwargs):
-        self.exchange_name = 'python-pubsub'
-        self.amqp_address = 'amqp://guest:guest@my_rabbitmq:5672//'
-        self.routing_key = 'pubsub'
-        self.queue_name = 'store'
+    def __init__(self, config=None):
+        self.config = config
         self.connection = self._connect()
 
     def start(self):
@@ -87,26 +78,23 @@ class RabbitMQSubscriber(ConsumerMixin):
         return [consumer(
             queues=[self._queue],
             callbacks=[self.on_message],
-            accept={'application/json'},)]
+            **self.config.get('consumer'))]
 
     def _connect(self):
-        connection = kombu.Connection(self.amqp_address,
-                                      failover_strategy='round-robin')
+        connection = kombu.Connection(**self.config.get('connection'))
         connection.ensure_connection()
         return connection
 
     def _create_exchange(self):
         exchange = kombu.Exchange(
-            self.exchange_name,
-            type='direct',
-            durable=True, auto_delete=False)(self.connection)
+            **self.config.get('exchange'))(self.connection)
         exchange.declare()
         return exchange
 
     def _create_queue(self):
         queue = kombu.Queue(
-            self.queue_name, self._exchange,
-            routing_key=self.routing_key, auto_delete=True)(self.connection)
+            exchange=self._exchange,
+            **self.config.get('queue'))(self.connection)
         queue.declare()
         return queue
 

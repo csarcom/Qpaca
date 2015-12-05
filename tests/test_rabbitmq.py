@@ -95,3 +95,9 @@ class TestRabbitMQSubscriber(object):
         consumers = self.subscriber.get_consumers(mock.Mock(), mock.Mock())
         assert type(consumers) is list
         assert len(consumers) == 1
+
+
+class TestSomething(object):
+    def test_something(self):
+        backend = RabbitMQ()
+        assert backend is not None

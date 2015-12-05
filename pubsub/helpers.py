@@ -1,4 +1,5 @@
 import falcon
+import yaml
 
 
 def max_body(limit):
@@ -13,3 +14,8 @@ def max_body(limit):
                 'Request body is too large', msg)
 
     return hook
+
+
+def get_config(backend):
+    with open("pubsub/backend/config.yml") as config:
+        return yaml.load(config).get(backend)

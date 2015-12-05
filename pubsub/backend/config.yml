@@ -1,0 +1,41 @@
+rabbitmq:
+    publisher:
+        connection:
+            hostname: amqp://guest:guest@my_rabbitmq:5672//
+            failover_strategy: round-robin
+            transport_options:
+                confirm_publish: True
+
+        exchange:
+            name: python-pubsub
+            type: direct
+            durable: True
+            auto_delete: False
+
+        publish:
+            routing_key: pubsub
+            serializer: json
+            compression: zlib
+            retry: True
+
+    subscriber:
+        connection:
+            hostname: amqp://guest:guest@my_rabbitmq:5672//
+
+        exchange:
+            name: python-pubsub
+            type: direct
+            durable: True
+            auto_delete: False
+
+        queue:
+            name: store
+            routing_key: pubsub
+            auto_delete: False
+
+        consumer:
+            accept:
+                - json
+
+
+
