@@ -6,3 +6,5 @@ pytest==2.8.3
 kombu==3.0.29
 gevent==1.1rc1
 PyYAML==3.11
+pytest-cov==2.2.0
+coveralls==1.1
