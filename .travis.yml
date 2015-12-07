@@ -8,3 +8,6 @@ install: "sudo pip install -r requirements.txt"
 script: py.test
 notifications:
     email: false
+branches:
+    only:
+        - master
