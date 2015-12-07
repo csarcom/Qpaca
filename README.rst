@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/csarcom/python-pubsub.svg?branch=master
+    :target: https://travis-ci.org/csarcom/python-pubsub
+
 =============
 python-pubsub
 =============
