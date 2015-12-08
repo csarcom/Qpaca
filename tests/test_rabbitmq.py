@@ -1,49 +1,18 @@
 import mock
-import pytest
 
 
-from pubsub.backend.rabbitmq import (
-    RabbitMQ, RabbitMQPublisher, RabbitMQSubscriber)
-
-
-class TestRabbitMQ(object):
-
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._connect')
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._connect')
-    def setup_class(self, mock1, mock2):
-        self.backend = RabbitMQ()
-
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher.start')
-    def test_call_start_publisher(self, mocked_function):
-        self.backend.start()
-        assert mocked_function.called
-
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber.start')
-    def test_call_start_subscriber(self, mocked_function):
-        self.backend.start()
-        assert mocked_function.called
-
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher.publish')
-    def test_call_publish(self, mocked_function):
-        self.backend.publish(None)
-        assert mocked_function.called
-
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher.publish')
-    def test_publisher_publish_args(self, mocked_function):
-        self.backend.publish('message')
-        mocked_function.assert_called_with('message')
+from pubsub.backend.rabbitmq import RabbitMQPublisher, RabbitMQSubscriber
 
 
 class TestRabbitMQPublisher(object):
 
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._connect')
     def setup_class(self, mock1):
-        config = mock.Mock()
-        self.publisher = RabbitMQPublisher(config=config)
+        self.publisher = RabbitMQPublisher()
 
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._connect')
     def test_call_connect(self, mocked_function):
-        RabbitMQPublisher(config=mock.Mock())
+        RabbitMQPublisher()
         assert mocked_function.called
 
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._create_exchange')
@@ -68,7 +37,7 @@ class TestRabbitMQSubscriber(object):
 
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._connect')
     def setup_class(self, mock1):
-        self.subscriber = RabbitMQSubscriber(config=mock.Mock())
+        self.subscriber = RabbitMQSubscriber()
 
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._connect')
     def test_call_connect(self, mocked_function):
