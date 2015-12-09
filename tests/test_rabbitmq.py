@@ -32,6 +32,18 @@ class TestRabbitMQPublisher(object):
         self.publisher.publish(None)
         assert self.publisher._producer.publish.called
 
+    @mock.patch('kombu.Exchange')
+    def test_create_exchange(self, mocked_exchange):
+        self.publisher.config = {'exchange': {}}
+        exchange = self.publisher._create_exchange()
+        assert exchange is not None
+
+    @mock.patch('kombu.Connection')
+    def test_connect(self, mocked_connection):
+        self.publisher.config = {'connection': {}}
+        connection = self.publisher._connect()
+        assert connection is not None
+
 
 class TestRabbitMQSubscriber(object):
 
@@ -69,3 +81,26 @@ class TestRabbitMQSubscriber(object):
         consumers = self.subscriber.get_consumers(mock.Mock(), mock.Mock())
         assert type(consumers) is list
         assert len(consumers) == 1
+
+    @mock.patch('kombu.Exchange')
+    def test_create_exchange(self, mocked_exchange):
+        self.subscriber.config = {'exchange': {}}
+        exchange = self.subscriber._create_exchange()
+        assert exchange is not None
+
+    @mock.patch('kombu.Queue')
+    def test_create_queue(self, mocked_queue):
+        self.subscriber.config = {'queue': {}}
+        connection = self.subscriber._create_queue()
+        assert connection is not None
+
+    @mock.patch('kombu.Connection')
+    def test_connect(self, mocked_connection):
+        self.subscriber.config = {'connection': {}}
+        connection = self.subscriber._connect()
+        assert connection is not None
+
+    @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber.run')
+    def test_call_consumer_run(self, mocked_function):
+        self.subscriber.run_forever()
+        assert mocked_function.called
