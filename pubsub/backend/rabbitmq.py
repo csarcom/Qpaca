@@ -4,32 +4,16 @@ monkey.patch_all()
 import uuid
 
 import kombu
-import gevent
 
 from kombu.mixins import ConsumerMixin
 
-from pubsub.backend.base import BaseBackend
+from pubsub.backend.base import BaseSubscriber, BasePublisher
 from pubsub.helpers import get_config
 
 
-class RabbitMQ(BaseBackend):
-    def __init__(self, *args, **kwargs):
-        config = get_config('rabbitmq')
-        self.publisher = RabbitMQPublisher(config.get('publisher', None))
-        self.subscriber = RabbitMQSubscriber(config.get('subscriber', None))
-
-    def start(self):
-        self.publisher.start()
-        self.subscriber.start()
-        gevent.spawn(self.subscriber.run_forever)
-
-    def publish(self, message):
-        return self.publisher.publish(message)
-
-
-class RabbitMQPublisher(object):
-    def __init__(self, config):
-        self.config = config
+class RabbitMQPublisher(BasePublisher):
+    def __init__(self):
+        self.config = get_config('rabbitmq').get('publisher', None)
         self._connection = self._connect()
 
     def start(self):
@@ -61,9 +45,9 @@ class RabbitMQPublisher(object):
         return connection
 
 
-class RabbitMQSubscriber(ConsumerMixin):
-    def __init__(self, config=None):
-        self.config = config
+class RabbitMQSubscriber(ConsumerMixin, BaseSubscriber):
+    def __init__(self):
+        self.config = get_config('rabbitmq').get('subscriber', None)
         self.connection = self._connect()
 
     def start(self):

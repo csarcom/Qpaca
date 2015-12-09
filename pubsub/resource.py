@@ -17,11 +17,11 @@ class ServerResource(object):
 
 class PublishResource(ServerResource):
     def __init__(self, backend, *args, **kwargs):
-        self.backend = backend()
-        self.backend.start()
+        self.publisher = backend()
+        self.publisher.start()
 
     def _dispatch(self, message):
-        return self.backend.publish(message)
+        return self.publisher.publish(message)
 
     @falcon.before(max_body(64 * 1024))
     def on_post(self, req, resp):
@@ -29,6 +29,7 @@ class PublishResource(ServerResource):
             message = req.context['payload']
         except KeyError:
             raise falcon.HTTPBadRequest(
+
                 'Missing payload',
                 'A payload must be submitted in the request body.')
 

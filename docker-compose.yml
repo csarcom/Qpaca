@@ -1,7 +1,17 @@
-pubsub:
+publisher:
+    container_name: publisher
     image: csarcom/python-pubsub
+    command: gunicorn -b 0.0.0.0:8000 pubsub.publisher:app
     ports:
         - "8000:8000"
+    links:
+        - rabbitmq
+    volumes:
+        - ./:/app
+subscriber:
+    container_name: subscriber
+    image: csarcom/python-pubsub
+    command: python pubsub/subscriber.py
     links:
         - rabbitmq
     volumes:

@@ -4,7 +4,7 @@ import falcon
 
 from pubsub.middleware import JSONTranslator, RequireJSON
 from pubsub.resource import PublishResource
-from pubsub.backend.rabbitmq import RabbitMQ
+from pubsub.backend.rabbitmq import RabbitMQPublisher
 
 time.sleep(5)
 app = falcon.API(middleware=[
@@ -14,4 +14,4 @@ app = falcon.API(middleware=[
 
 # Routes
 
-app.add_route('/publish/', PublishResource(backend=RabbitMQ))
+app.add_route('/publish/', PublishResource(backend=RabbitMQPublisher))
