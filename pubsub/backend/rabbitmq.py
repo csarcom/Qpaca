@@ -3,18 +3,17 @@ monkey.patch_all()
 
 import uuid
 
-import kombu
-
 from kombu.mixins import ConsumerMixin
 
 from pubsub.backend.base import BaseSubscriber, BasePublisher
 from pubsub.helpers import get_config
+from pubsub.backend.handlers import RabbitMQHandler
 
 
-class RabbitMQPublisher(BasePublisher):
+class RabbitMQPublisher(BasePublisher, RabbitMQHandler):
     def __init__(self):
         self.config = get_config('rabbitmq').get('publisher', None)
-        self._connection = self._connect()
+        self.connection = self._connect()
 
     def start(self):
         self._exchange = self._create_exchange()
@@ -30,22 +29,8 @@ class RabbitMQPublisher(BasePublisher):
             message, exchange=self._exchange, **self.config.get('publish'))
         return message_id
 
-    def _create_producer(self):
-        return kombu.Producer(self._connection)
 
-    def _create_exchange(self):
-        exchange = kombu.Exchange(
-            **self.config.get('exchange'))(self._connection)
-        exchange.declare()
-        return exchange
-
-    def _connect(self):
-        connection = kombu.Connection(**self.config.get('connection'))
-        connection.ensure_connection()
-        return connection
-
-
-class RabbitMQSubscriber(ConsumerMixin, BaseSubscriber):
+class RabbitMQSubscriber(ConsumerMixin, BaseSubscriber, RabbitMQHandler):
     def __init__(self):
         self.config = get_config('rabbitmq').get('subscriber', None)
         self.connection = self._connect()
@@ -62,24 +47,6 @@ class RabbitMQSubscriber(ConsumerMixin, BaseSubscriber):
             queues=[self._queue],
             callbacks=[self.on_message],
             **self.config.get('consumer'))]
-
-    def _connect(self):
-        connection = kombu.Connection(**self.config.get('connection'))
-        connection.ensure_connection()
-        return connection
-
-    def _create_exchange(self):
-        exchange = kombu.Exchange(
-            **self.config.get('exchange'))(self.connection)
-        exchange.declare()
-        return exchange
-
-    def _create_queue(self):
-        queue = kombu.Queue(
-            exchange=self._exchange,
-            **self.config.get('queue'))(self.connection)
-        queue.declare()
-        return queue
 
     def on_message(self, body, message):
         message.ack()
