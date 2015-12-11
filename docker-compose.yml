@@ -1,7 +1,7 @@
 publisher:
     container_name: publisher
     image: csarcom/python-pubsub
-    command: gunicorn -b 0.0.0.0:8000 pubsub.publisher:app
+    command: gunicorn -b 0.0.0.0:8000 example.publisher:app
     ports:
         - "8000:8000"
     links:
