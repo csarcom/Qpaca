@@ -11,8 +11,8 @@ from pubsub.backend.handlers import RabbitMQHandler
 
 
 class RabbitMQPublisher(BasePublisher, RabbitMQHandler):
-    def __init__(self):
-        self.config = get_config('rabbitmq').get('publisher', None)
+    def __init__(self, config=None):
+        self.config = config or get_config('rabbitmq').get('publisher', None)
         self.connection = self._connect()
 
     def start(self):
@@ -31,8 +31,8 @@ class RabbitMQPublisher(BasePublisher, RabbitMQHandler):
 
 
 class RabbitMQSubscriber(ConsumerMixin, BaseSubscriber, RabbitMQHandler):
-    def __init__(self):
-        self.config = get_config('rabbitmq').get('subscriber', None)
+    def __init__(self, config=None):
+        self.config = config or get_config('rabbitmq').get('subscriber', None)
         self.connection = self._connect()
 
     def start(self):
