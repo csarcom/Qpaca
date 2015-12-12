@@ -2,6 +2,8 @@ publisher:
     container_name: publisher
     image: csarcom/python-pubsub
     command: gunicorn -b 0.0.0.0:8000 example.publisher:app
+    environment:
+        - PYTHONUNBUFFERED=0
     ports:
         - "8000:8000"
     links:
@@ -12,6 +14,8 @@ subscriber:
     container_name: subscriber
     image: csarcom/python-pubsub
     command: python example/subscriber.py
+    environment:
+        - PYTHONUNBUFFERED=0
     links:
         - rabbitmq
     volumes:
