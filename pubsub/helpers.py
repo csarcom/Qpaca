@@ -3,6 +3,7 @@ import yaml
 
 
 def max_body(limit):
+    """Validate if a request size exceed 'limit'"""
 
     def hook(req, resp, resource, params):
         length = req.content_length
@@ -17,5 +18,7 @@ def max_body(limit):
 
 
 def get_config(backend):
+    """Open and read yaml file with all the backend information"""
+
     with open("pubsub/backend/config.yml") as config:
         return yaml.load(config).get(backend)
