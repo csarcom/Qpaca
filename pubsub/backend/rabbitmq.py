@@ -3,7 +3,7 @@ import uuid
 from kombu.mixins import ConsumerMixin
 
 from pubsub.backend.base import BaseSubscriber, BasePublisher
-from pubsub.helpers import get_config
+from pubsub.helpers import get_config, logger
 from pubsub.backend.handlers import RabbitMQHandler
 
 
@@ -17,6 +17,7 @@ class RabbitMQPublisher(BasePublisher, RabbitMQHandler):
     def start(self):
         """Create everything necessary to send a message"""
 
+        logger.debug('Starting RabbitMQ Publisher')
         self._exchange = self._create_exchange()
         self._producer = self._create_producer()
 
@@ -34,6 +35,7 @@ class RabbitMQPublisher(BasePublisher, RabbitMQHandler):
 
         self._producer.publish(
             message, exchange=self._exchange, **self.config.get('publish'))
+        logger.info('Message sent: {0}'.format(message))
         return message_id
 
 
@@ -45,6 +47,7 @@ class RabbitMQSubscriber(ConsumerMixin, BaseSubscriber, RabbitMQHandler):
     def start(self):
         """Create everything necessary to receive a message"""
 
+        logger.debug('Starting RabbitMQ Subscriber')
         self._exchange = self._create_exchange()
         self._queue = self._create_queue()
 
@@ -66,4 +69,5 @@ class RabbitMQSubscriber(ConsumerMixin, BaseSubscriber, RabbitMQHandler):
     def on_message(self, body, message):
         """it is called every time a new message is received"""
 
+        logger.info('Message received: {0}'.format(body))
         message.ack()

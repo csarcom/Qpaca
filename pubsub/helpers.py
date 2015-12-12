@@ -1,5 +1,12 @@
 import falcon
 import yaml
+import logging
+import sys
+log_format = '%(asctime)s %(name)s[%(process)d] %(levelname)s: %(message)s'
+logging.basicConfig(stream=sys.stdout,
+                    level=logging.DEBUG,
+                    format=log_format)
+logger = logging.getLogger('pubsub')
 
 
 def max_body(limit):
