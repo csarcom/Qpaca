@@ -33,7 +33,7 @@ Starting publisher::
 
 Starting subscriber::
 
-	docker run -it --link my_rabbitmq:my_rabbitmq -v /$(pwd):/app csarcom/python-pubsub python pubsub/subscriber.py
+	docker run -it --link my_rabbitmq:my_rabbitmq -v /$(pwd):/app csarcom/python-pubsub python example/subscriber.py
 
 Cleanup containers::
 
