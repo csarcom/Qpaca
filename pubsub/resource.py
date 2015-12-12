@@ -8,6 +8,11 @@ from pubsub.helpers import max_body
 # transitions, which map to HTTP verbs.
 
 class ServerResource(object):
+    """Implement a default ServerResource.
+
+    Its just a model to how create your own resource
+    """
+
     def _dispatch(self):
         raise NotImplementedError
 
@@ -16,8 +21,13 @@ class ServerResource(object):
 
 
 class PublishResource(ServerResource):
-    def __init__(self, backend, *args, **kwargs):
-        self.publisher = backend()
+    """Simple Publisher Resource.
+    It create and start a RabbitMQPublisher and take care of dispatch
+    new messages.
+    """
+
+    def __init__(self, publisher, *args, **kwargs):
+        self.publisher = publisher
         self.publisher.start()
 
     def _dispatch(self, message):
@@ -25,6 +35,13 @@ class PublishResource(ServerResource):
 
     @falcon.before(max_body(64 * 1024))
     def on_post(self, req, resp):
+        """
+        Verify if the request has a payload key with the message
+        and dispatch it.
+
+        Return the location of a future result
+        """
+
         try:
             message = req.context['payload']
         except KeyError:

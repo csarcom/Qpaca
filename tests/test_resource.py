@@ -21,7 +21,7 @@ class TestServerResource(object):
 
 class TestPublishResource(object):
     def setup_class(self):
-        self.resource = PublishResource(backend=mock.Mock())
+        self.resource = PublishResource(publisher=mock.Mock())
 
     def test_on_post_req_key_error(self):
         with pytest.raises(falcon.errors.HTTPBadRequest):

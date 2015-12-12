@@ -11,7 +11,7 @@ publisher:
 subscriber:
     container_name: subscriber
     image: csarcom/python-pubsub
-    command: python pubsub/subscriber.py
+    command: python example/subscriber.py
     links:
         - rabbitmq
     volumes:

@@ -4,6 +4,7 @@ import falcon
 
 
 class RequireJSON(object):
+    """Validate if the request has json as content_type"""
 
     def process_request(self, req, resp):
         if not req.client_accepts_json:
@@ -19,6 +20,7 @@ class RequireJSON(object):
 
 
 class JSONTranslator(object):
+    """Validate if the request body is a valid json"""
 
     def process_request(self, req, resp):
         # req.stream corresponds to the WSGI wsgi.input environ variable,
