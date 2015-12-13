@@ -1,7 +1,7 @@
 rabbitmq:
     publisher:
         connection:
-            hostname: amqp://guest:guest@my_rabbitmq:5672//
+            hostname: amqp://guest:guest@pythonpubsub_rabbitmq_1:5672//
             failover_strategy: round-robin
             transport_options:
                 confirm_publish: True
@@ -20,7 +20,7 @@ rabbitmq:
 
     subscriber:
         connection:
-            hostname: amqp://guest:guest@my_rabbitmq:5672//
+            hostname: amqp://guest:guest@pythonpubsub_rabbitmq_1:5672//
 
         exchange:
             name: python-pubsub

@@ -1,5 +1,4 @@
 publisher:
-    container_name: publisher
     image: csarcom/python-pubsub
     command: gunicorn -b 0.0.0.0:8000 example.publisher:app
     environment:
@@ -11,7 +10,6 @@ publisher:
     volumes:
         - ./:/app
 subscriber:
-    container_name: subscriber
     image: csarcom/python-pubsub
     command: python example/subscriber.py
     environment:
@@ -21,7 +19,6 @@ subscriber:
     volumes:
         - ./:/app
 rabbitmq:
-    container_name: my_rabbitmq
     image: rabbitmq:3-management
     ports:
         - "15672:15672"
