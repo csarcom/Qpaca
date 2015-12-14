@@ -1,4 +1,5 @@
 import kombu
+import socket
 
 from pubsub.helpers import logger
 
@@ -29,9 +30,10 @@ class RabbitMQHandler(object):
     def _create_queue(self):
         """Create a RabbitMQ queue"""
 
+        queue_name = socket.gethostname()
         logger.debug('Creating RabbitMQ Queue')
         queue = kombu.Queue(
-            exchange=self._exchange,
-            **self.config.get('queue'))(self.connection)
+            exchange=self._exchange, name=queue_name,
+            auto_delete=True, **self.config.get('queue'))(self.connection)
         queue.declare()
         return queue

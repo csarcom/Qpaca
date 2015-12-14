@@ -29,9 +29,7 @@ rabbitmq:
             auto_delete: False
 
         queue:
-            name: store
             routing_key: pubsub
-            auto_delete: False
 
         consumer:
             accept:
