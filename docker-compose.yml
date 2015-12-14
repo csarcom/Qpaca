@@ -22,3 +22,14 @@ rabbitmq:
     image: rabbitmq:3-management
     ports:
         - "15672:15672"
+        - "5672:5672"
+consul:
+    image: gliderlabs/consul-server
+    container_name: consul
+    net: "host"
+registrator:
+    image: gliderlabs/registrator
+    container_name: registrador
+    net: "host"
+    volumes:
+        - /var/run/docker.sock:/tmp/docker.sock
