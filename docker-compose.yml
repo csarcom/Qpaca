@@ -3,6 +3,7 @@ publisher:
     command: gunicorn -b 0.0.0.0:8000 example.publisher:app
     environment:
         - PYTHONUNBUFFERED=0
+        - SERVICE_NAME=publisher
     ports:
         - "8000:8000"
     links:
@@ -14,6 +15,7 @@ subscriber:
     command: python example/subscriber.py
     environment:
         - PYTHONUNBUFFERED=0
+        - SERVICE_NAME=subscriber
     links:
         - rabbitmq
     volumes:
@@ -24,12 +26,14 @@ rabbitmq:
         - "15672:15672"
         - "5672:5672"
 consul:
-    image: gliderlabs/consul-server
     container_name: consul
+    image: gliderlabs/consul-server
     net: "host"
+    command: -bootstrap
 registrator:
-    image: gliderlabs/registrator
     container_name: registrador
+    image: gliderlabs/registrator
     net: "host"
     volumes:
         - /var/run/docker.sock:/tmp/docker.sock
+    command: consul://localhost:8500

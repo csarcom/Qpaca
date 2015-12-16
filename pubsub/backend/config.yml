@@ -1,8 +1,8 @@
 rabbitmq:
     publisher:
         connection:
-            hostname: amqp://guest:guest@pythonpubsub_rabbitmq_1:5672//
             failover_strategy: round-robin
+            connect_timeout: 5
             transport_options:
                 confirm_publish: True
 
@@ -20,7 +20,7 @@ rabbitmq:
 
     subscriber:
         connection:
-            hostname: amqp://guest:guest@pythonpubsub_rabbitmq_1:5672//
+            connect_timeout: 5
 
         exchange:
             name: python-pubsub
@@ -29,9 +29,7 @@ rabbitmq:
             auto_delete: False
 
         queue:
-            name: store
             routing_key: pubsub
-            auto_delete: False
 
         consumer:
             accept:
