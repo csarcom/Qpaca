@@ -43,7 +43,13 @@ Cleanup containers::
 Docker Compose
 --------------
 
+Starting::
+
 	docker-compose up
+
+Scale subscribers::
+
+	docker-compose scale subscriber=<NUMBER>
 
 Running tests
 -------------
