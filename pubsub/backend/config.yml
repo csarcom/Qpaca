@@ -29,7 +29,9 @@ rabbitmq:
             auto_delete: False
 
         queue:
+            # TODO: if a name key is add here, all subscribers will share the same key
             routing_key: pubsub
+            auto_delete: True
 
         consumer:
             accept:

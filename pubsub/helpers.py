@@ -1,12 +1,13 @@
 import falcon
 import yaml
 import logging
+import socket
 import sys
 log_format = '%(asctime)s %(name)s[%(process)d] %(levelname)s: %(message)s'
 logging.basicConfig(stream=sys.stdout,
                     level=logging.DEBUG,
                     format=log_format)
-logger = logging.getLogger('pubsub')
+logger = logging.getLogger(socket.gethostname())
 
 
 def max_body(limit):
