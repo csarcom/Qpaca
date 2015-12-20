@@ -5,7 +5,7 @@ from kombu.mixins import ConsumerMixin
 from pubsub.backend.base import BaseSubscriber, BasePublisher
 from pubsub.helpers import get_config, logger
 from pubsub.backend.handlers import RabbitMQHandler
-from pubsub.monitoring.influxdb import InfluxDB
+from pubsub.monitoring.influx import InfluxDB
 
 
 class RabbitMQPublisher(BasePublisher, RabbitMQHandler):
