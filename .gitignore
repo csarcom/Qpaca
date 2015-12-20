@@ -3,6 +3,7 @@
 __pycache__
 .cache
 .coverage
+grafana/sessions
 pubsub/.cache
 tests/.cache
 tests/__pycache__
