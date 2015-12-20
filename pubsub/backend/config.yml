@@ -29,10 +29,18 @@ rabbitmq:
             auto_delete: False
 
         queue:
-            # TODO: if a name key is add here, all subscribers will share the same key
+            # If 'name' key is add here, all subscribers will share the same queue
             routing_key: pubsub
             auto_delete: True
 
         consumer:
             accept:
                 - json
+monitoring:
+    influxdb:
+        client:
+            host: influxdb
+            port: 8086
+            username: root
+            password: root
+            database: cs_queue

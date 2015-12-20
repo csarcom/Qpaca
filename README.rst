@@ -54,7 +54,7 @@ Scale subscribers::
 Running tests
 -------------
 
-	docker run -it -v /$(pwd):/app csarcom/python-pubsub bash
+	docker run -it --rm -v /$(pwd):/app csarcom/python-pubsub bash
 	py.test pubsub/tests
 
 Build python-pubsub

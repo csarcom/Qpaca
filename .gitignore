@@ -1,8 +1,6 @@
 *.pyc
 *.TODO
 __pycache__
-database*
-grafana*
 .cache
 .coverage
 pubsub/.cache

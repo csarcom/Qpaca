@@ -7,6 +7,7 @@ publisher:
         - "8000:8000"
     links:
         - rabbitmq
+        - influxdb
     volumes:
         - ./:/app
 subscriber:
@@ -16,6 +17,7 @@ subscriber:
         - PYTHONUNBUFFERED=0
     links:
         - rabbitmq
+        - influxdb
     volumes:
         - ./:/app
 rabbitmq:
