@@ -8,3 +8,4 @@ gevent==1.1rc1
 PyYAML==3.11
 pytest-cov==2.2.0
 coveralls==1.1
+influxdb==2.10.0

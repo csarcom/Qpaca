@@ -5,6 +5,7 @@ from kombu.mixins import ConsumerMixin
 from pubsub.backend.base import BaseSubscriber, BasePublisher
 from pubsub.helpers import get_config, logger
 from pubsub.backend.handlers import RabbitMQHandler
+from pubsub.monitoring.influx import InfluxDB
 
 
 class RabbitMQPublisher(BasePublisher, RabbitMQHandler):
@@ -13,6 +14,8 @@ class RabbitMQPublisher(BasePublisher, RabbitMQHandler):
     def __init__(self, config=None):
         self.config = config or get_config('rabbitmq').get('publisher', None)
         self.connection = self._connect()
+        self.monitor = InfluxDB(
+            'publisher', config or get_config('monitoring').get('influxdb'))
 
     def start(self):
         """Create everything necessary to send a message"""
@@ -36,6 +39,8 @@ class RabbitMQPublisher(BasePublisher, RabbitMQHandler):
         self._producer.publish(
             message, exchange=self._exchange, **self.config.get('publish'))
         logger.info('Message sent: {0}'.format(message))
+
+        self.monitor.write(1)
         return message_id
 
 
@@ -43,6 +48,8 @@ class RabbitMQSubscriber(ConsumerMixin, BaseSubscriber, RabbitMQHandler):
     def __init__(self, config=None):
         self.config = config or get_config('rabbitmq').get('subscriber', None)
         self.connection = self._connect()
+        self.monitor = InfluxDB(
+            'subscriber', config or get_config('monitoring').get('influxdb'))
 
     def start(self):
         """Create everything necessary to receive a message"""
@@ -71,3 +78,4 @@ class RabbitMQSubscriber(ConsumerMixin, BaseSubscriber, RabbitMQHandler):
 
         logger.info('Message received: {0}'.format(body))
         message.ack()
+        self.monitor.write(1)
