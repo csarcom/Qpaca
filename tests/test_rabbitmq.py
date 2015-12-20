@@ -6,9 +6,16 @@ from pubsub.backend.rabbitmq import RabbitMQPublisher, RabbitMQSubscriber
 
 class TestRabbitMQPublisher(object):
 
+    @mock.patch('pubsub.backend.rabbitmq.InfluxDB')
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._connect')
-    def setup_class(self, mock1):
+    def setup_class(self, mock1, mock2):
         self.publisher = RabbitMQPublisher()
+
+    @mock.patch('pubsub.backend.rabbitmq.InfluxDB')
+    @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._connect')
+    def test_call_create_monitor(self, mocked_class, mocked_function):
+        RabbitMQPublisher()
+        assert mocked_class.called
 
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._connect')
     def test_call_connect(self, mocked_function):
@@ -47,9 +54,16 @@ class TestRabbitMQPublisher(object):
 
 class TestRabbitMQSubscriber(object):
 
+    @mock.patch('pubsub.backend.rabbitmq.InfluxDB')
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._connect')
-    def setup_class(self, mock1):
+    def setup_class(self, mock1, mock2):
         self.subscriber = RabbitMQSubscriber()
+
+    @mock.patch('pubsub.backend.rabbitmq.InfluxDB')
+    @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._connect')
+    def test_call_create_monitor(self, mocked_class, mocked_function):
+        RabbitMQSubscriber()
+        assert mocked_class.called
 
     @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._connect')
     def test_call_connect(self, mocked_function):
@@ -69,10 +83,14 @@ class TestRabbitMQSubscriber(object):
         assert mocked_exchange.called
 
     def test_ack_message_on_message(self):
-        message = mock.Mock(ack=mock.Mock(return_value=True))
+        message = mock.Mock()
         self.subscriber.on_message(
             body=None, message=message)
         assert message.ack.called
+
+    def test_call_monitor_on_message(self):
+        self.subscriber.on_message(body=None, message=mock.Mock())
+        assert self.subscriber.monitor.write.called
 
     def test_return_get_consumers(self):
         self.subscriber.config = {'consumer': {}}
