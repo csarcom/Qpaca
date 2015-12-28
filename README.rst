@@ -1,7 +1,7 @@
 .. image:: https://travis-ci.org/WeLikeAlpacas/python-pubsub.svg
     :target: https://travis-ci.org/WeLikeAlpacas/python-pubsub
-.. image:: https://coveralls.io/repos/csarcom/python-pubsub/badge.svg?branch=master&service=github
-	:target: https://coveralls.io/github/csarcom/python-pubsub?branch=master
+.. image:: https://coveralls.io/repos/WeLikeAlpacas/python-pubsub/badge.svg?branch=master&service=github
+  :target: https://coveralls.io/github/WeLikeAlpacas/python-pubsub?branch=master
 
 =============
 python-pubsub
