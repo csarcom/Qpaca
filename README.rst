@@ -1,5 +1,5 @@
-.. image:: https://travis-ci.org/csarcom/python-pubsub.svg?branch=master
-    :target: https://travis-ci.org/csarcom/python-pubsub
+.. image:: https://travis-ci.org/WeLikeAlpacas/python-pubsub.svg
+    :target: https://travis-ci.org/WeLikeAlpacas/python-pubsub
 .. image:: https://coveralls.io/repos/csarcom/python-pubsub/badge.svg?branch=master&service=github
 	:target: https://coveralls.io/github/csarcom/python-pubsub?branch=master
 
