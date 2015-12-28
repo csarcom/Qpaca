@@ -18,14 +18,14 @@ class TestInfluxDB(object):
     def test_write_parameters(self, mocked_function):
         client = InfluxDB(name='something', config={'client': {}})
         date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f'")
-        client.write(1, date)
-        mocked_function.assert_called_with(1, date)
+        client.write((date, 1))
+        mocked_function.assert_called_with((date, 1))
 
     @mock.patch('pubsub.monitoring.influx.InfluxDBClient.write_points')
     def test_write_influx(self, mocked_function):
         client = InfluxDB(name='something', config={'client': {}})
         date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f'")
-        client.write(1, date)
+        client.write(point=(date, 1))
         mocked_function.assert_called_with(
             [{
                 "measurement": 'something',
