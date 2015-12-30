@@ -1,5 +1,4 @@
 import socket
-import datetime
 
 from influxdb import InfluxDBClient
 
@@ -15,9 +14,10 @@ class InfluxDB(object):
         self.client = InfluxDBClient(**config.get('client'))
         self.name = name
 
-    def write(self, data, date=datetime.datetime.now().strftime(
-              "%Y-%m-%d %H:%M:%S.%f'")):
-        """Write to InfluxDB"""
+    def write(self, point):
+        """Write to InfluxDB
+        point is a tuple that contain (DATE, VALUE)
+        """
 
         host = "{0}-{1}".format(self.name, socket.gethostname())
         json_body = [{
@@ -25,10 +25,11 @@ class InfluxDB(object):
             "tags": {
                 "host": host,
             },
-            "time": date,
+            "time": point[0],
             "fields": {
-                "value": data
+                "value": point[1]
             }}]
 
-        logger.debug('Write on InfluxDB: {0}. value={1}'.format(host, data))
+        logger.debug('Write on InfluxDB: {0}. point: {1}'.format(
+            host, point))
         self.client.write_points(json_body)

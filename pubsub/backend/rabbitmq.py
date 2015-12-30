@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from kombu.mixins import ConsumerMixin
 
@@ -40,7 +41,8 @@ class RabbitMQPublisher(BasePublisher, RabbitMQHandler):
             message, exchange=self._exchange, **self.config.get('publish'))
         logger.info('Message sent: {0}'.format(message))
 
-        self.monitor.write(1)
+        point = (datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f'"), 1)
+        self.monitor.write(point)
         return message_id
 
 
@@ -78,4 +80,6 @@ class RabbitMQSubscriber(ConsumerMixin, BaseSubscriber, RabbitMQHandler):
 
         logger.info('Message received: {0}'.format(body))
         message.ack()
-        self.monitor.write(1)
+
+        point = (datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f'"), 1)
+        self.monitor.write(point)
