@@ -1,5 +1,5 @@
 publisher:
-    image: csarcom/python-pubsub
+    image: csarcom/qpaca
     command: gunicorn -b 0.0.0.0:8000 example.publisher:app
     environment:
         - PYTHONUNBUFFERED=0
@@ -11,7 +11,7 @@ publisher:
     volumes:
         - ./:/app
 subscriber:
-    image: csarcom/python-pubsub
+    image: csarcom/qpaca
     command: python example/subscriber.py
     environment:
         - PYTHONUNBUFFERED=0

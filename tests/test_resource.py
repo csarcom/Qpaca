@@ -3,7 +3,7 @@ import pytest
 
 import falcon
 
-from pubsub.resource import ServerResource, PublishResource
+from qpaca.resource import ServerResource, PublishResource
 
 
 class TestServerResource(object):

@@ -3,7 +3,7 @@ import pytest
 
 import falcon
 
-from pubsub.middleware import JSONTranslator, RequireJSON
+from qpaca.middleware import JSONTranslator, RequireJSON
 
 
 class TestJSONTranslator(object):

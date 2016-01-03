@@ -1,17 +1,17 @@
-.. image:: https://travis-ci.org/WeLikeAlpacas/python-pubsub.svg
-    :target: https://travis-ci.org/WeLikeAlpacas/python-pubsub
-.. image:: https://coveralls.io/repos/WeLikeAlpacas/python-pubsub/badge.svg?branch=master&service=github
-  :target: https://coveralls.io/github/WeLikeAlpacas/python-pubsub?branch=master
+.. image:: https://travis-ci.org/WeLikeAlpacas/qpacab.svg
+    :target: https://travis-ci.org/WeLikeAlpacas/qpaca
+.. image:: https://coveralls.io/repos/WeLikeAlpacas/qpaca/badge.svg?branch=master&service=github
+  :target: https://coveralls.io/github/WeLikeAlpacas/qpaca?branch=master
 
-=============
-python-pubsub
-=============
+=====
+Qpaca
+=====
 
 =============
 Build and Run
 =============
 
-We can run python-pubsub using normal docker containers or docker-compose
+We can run Qpaca using normal docker containers or docker-compose
 
 Docker Containers
 -----------------
@@ -25,15 +25,15 @@ You can access now RabbitMQ Management using http://localhost:15672 using creden
 
 Pulling image::
 
-	docker pull csarcom/python-pubsub:latest
+	docker pull csarcom/qpaca:latest
 
 Starting publisher::
 
-	docker run -d -p 8000:8000 --link my_rabbitmq:my_rabbitmq -v /$(pwd):/app csarcom/python-pubsub gunicorn -b 0.0.0.0:8000 pubsub.publisher:app
+	docker run -d -p 8000:8000 --link my_rabbitmq:my_rabbitmq -v /$(pwd):/app csarcom/qpaca gunicorn -b 0.0.0.0:8000 qpaca.publisher:app
 
 Starting subscriber::
 
-	docker run -it --link my_rabbitmq:my_rabbitmq -v /$(pwd):/app csarcom/python-pubsub python example/subscriber.py
+	docker run -it --link my_rabbitmq:my_rabbitmq -v /$(pwd):/app csarcom/qpaca python example/subscriber.py
 
 Cleanup containers::
 
@@ -54,15 +54,15 @@ Scale subscribers::
 Running tests
 -------------
 
-	docker run -it --rm -v /$(pwd):/app csarcom/python-pubsub bash
-	py.test pubsub/tests
+	docker run -it --rm -v /$(pwd):/app csarcom/qpaca bash
+	py.test tests
 
-Build python-pubsub
--------------------
+Build Qpaca
+-----------
 
-Build docker container python-pubsub, you just need to do this if you want do update/create a new image::
+Build docker container Qpaca, you just need to do this if you want do update/create a new image::
 
-	docker build -t python-pubsub .
+	docker build -t qpaca .
 
 
 =======

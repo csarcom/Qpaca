@@ -1,6 +1,6 @@
 import pytest
 
-from pubsub.backend.base import BasePublisher, BaseSubscriber
+from qpaca.backend.base import BasePublisher, BaseSubscriber
 
 
 class TestBasePublisher(object):
