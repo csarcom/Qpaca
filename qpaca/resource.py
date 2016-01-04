@@ -1,6 +1,6 @@
 import falcon
 
-from pubsub.helpers import max_body
+from qpaca.helpers import max_body
 
 
 # Falcon follows the REST architectural style, meaning (among

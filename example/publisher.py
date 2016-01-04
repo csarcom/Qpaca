@@ -15,9 +15,9 @@ you can just create different routes like:
 
 import falcon
 
-from pubsub.middleware import JSONTranslator, RequireJSON
-from pubsub.resource import PublishResource
-from pubsub.backend.rabbitmq import RabbitMQPublisher
+from qpaca.middleware import JSONTranslator, RequireJSON
+from qpaca.resource import PublishResource
+from qpaca.backend.rabbitmq import RabbitMQPublisher
 
 app = falcon.API(middleware=[
     RequireJSON(),

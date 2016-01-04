@@ -2,7 +2,7 @@ import socket
 
 from influxdb import InfluxDBClient
 
-from pubsub.helpers import logger
+from qpaca.helpers import logger
 
 
 class InfluxDB(object):

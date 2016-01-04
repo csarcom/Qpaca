@@ -1,36 +1,36 @@
 rabbitmq:
     publisher:
         connection:
-            hostname: amqp://guest:guest@pythonpubsub_rabbitmq_1:5672//
+            hostname: amqp://guest:guest@qpaca_rabbitmq_1:5672//
             failover_strategy: round-robin
             transport_options:
                 confirm_publish: True
 
         exchange:
-            name: python-pubsub
+            name: qpaca-exhange
             type: direct
             durable: True
             auto_delete: False
 
         publish:
-            routing_key: pubsub
+            routing_key: qpaca
             serializer: json
             compression: zlib
             retry: True
 
     subscriber:
         connection:
-            hostname: amqp://guest:guest@pythonpubsub_rabbitmq_1:5672//
+            hostname: amqp://guest:guest@qpaca_rabbitmq_1:5672//
 
         exchange:
-            name: python-pubsub
+            name: qpaca-exchange
             type: direct
             durable: True
             auto_delete: False
 
         queue:
             # If 'name' key is add here, all subscribers will share the same queue
-            routing_key: pubsub
+            routing_key: qpaca
             auto_delete: True
 
         consumer:

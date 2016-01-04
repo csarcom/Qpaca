@@ -1,7 +1,7 @@
 import kombu
 import socket
 
-from pubsub.helpers import logger
+from qpaca.helpers import logger
 
 
 class RabbitMQHandler(object):

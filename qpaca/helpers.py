@@ -28,5 +28,5 @@ def max_body(limit):
 def get_config(backend):
     """Open and read yaml file with all the backend information"""
 
-    with open("pubsub/backend/config.yml") as config:
+    with open("qpaca/backend/config.yml") as config:
         return yaml.load(config).get(backend)

@@ -2,7 +2,7 @@ import gevent
 import sys
 sys.path.insert(0, '.')
 
-from pubsub.backend.rabbitmq import RabbitMQSubscriber
+from qpaca.backend.rabbitmq import RabbitMQSubscriber
 
 
 if __name__ == '__main__':

@@ -1,34 +1,34 @@
 import mock
 
 
-from pubsub.backend.rabbitmq import RabbitMQPublisher, RabbitMQSubscriber
+from qpaca.backend.rabbitmq import RabbitMQPublisher, RabbitMQSubscriber
 
 
 class TestRabbitMQPublisher(object):
 
-    @mock.patch('pubsub.backend.rabbitmq.InfluxDB')
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._connect')
+    @mock.patch('qpaca.backend.rabbitmq.InfluxDB')
+    @mock.patch('qpaca.backend.rabbitmq.RabbitMQPublisher._connect')
     def setup_class(self, mock1, mock2):
         self.publisher = RabbitMQPublisher()
 
-    @mock.patch('pubsub.backend.rabbitmq.InfluxDB')
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._connect')
+    @mock.patch('qpaca.backend.rabbitmq.InfluxDB')
+    @mock.patch('qpaca.backend.rabbitmq.RabbitMQPublisher._connect')
     def test_call_create_monitor(self, mocked_class, mocked_function):
         RabbitMQPublisher()
         assert mocked_class.called
 
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._connect')
+    @mock.patch('qpaca.backend.rabbitmq.RabbitMQPublisher._connect')
     def test_call_connect(self, mocked_function):
         RabbitMQPublisher()
         assert mocked_function.called
 
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._create_exchange')
+    @mock.patch('qpaca.backend.rabbitmq.RabbitMQPublisher._create_exchange')
     def test_call_create_exchange(self, mocked_function):
         self.publisher.start()
         assert mocked_function.called
 
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._create_exchange')
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQPublisher._create_producer')
+    @mock.patch('qpaca.backend.rabbitmq.RabbitMQPublisher._create_exchange')
+    @mock.patch('qpaca.backend.rabbitmq.RabbitMQPublisher._create_producer')
     def test_call_create_producer(self, mocked_exchange, mocked_producer):
         self.publisher.start()
         assert self.publisher._create_producer.called
@@ -54,30 +54,30 @@ class TestRabbitMQPublisher(object):
 
 class TestRabbitMQSubscriber(object):
 
-    @mock.patch('pubsub.backend.rabbitmq.InfluxDB')
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._connect')
+    @mock.patch('qpaca.backend.rabbitmq.InfluxDB')
+    @mock.patch('qpaca.backend.rabbitmq.RabbitMQSubscriber._connect')
     def setup_class(self, mock1, mock2):
         self.subscriber = RabbitMQSubscriber()
 
-    @mock.patch('pubsub.backend.rabbitmq.InfluxDB')
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._connect')
+    @mock.patch('qpaca.backend.rabbitmq.InfluxDB')
+    @mock.patch('qpaca.backend.rabbitmq.RabbitMQSubscriber._connect')
     def test_call_create_monitor(self, mocked_class, mocked_function):
         RabbitMQSubscriber()
         assert mocked_class.called
 
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._connect')
+    @mock.patch('qpaca.backend.rabbitmq.RabbitMQSubscriber._connect')
     def test_call_connect(self, mocked_function):
         RabbitMQSubscriber()
         assert mocked_function.called
 
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._create_exchange')
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._create_queue')
+    @mock.patch('qpaca.backend.rabbitmq.RabbitMQSubscriber._create_exchange')
+    @mock.patch('qpaca.backend.rabbitmq.RabbitMQSubscriber._create_queue')
     def test_call_create_queue(self, mocked_exchange, mocked_queue):
         self.subscriber.start()
         assert mocked_queue.called
 
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._create_exchange')
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber._create_queue')
+    @mock.patch('qpaca.backend.rabbitmq.RabbitMQSubscriber._create_exchange')
+    @mock.patch('qpaca.backend.rabbitmq.RabbitMQSubscriber._create_queue')
     def test_call_create_exchange(self, mocked_exchange, mocked_queue):
         self.subscriber.start()
         assert mocked_exchange.called
@@ -118,7 +118,7 @@ class TestRabbitMQSubscriber(object):
         connection = self.subscriber._connect()
         assert connection is not None
 
-    @mock.patch('pubsub.backend.rabbitmq.RabbitMQSubscriber.run')
+    @mock.patch('qpaca.backend.rabbitmq.RabbitMQSubscriber.run')
     def test_call_consumer_run(self, mocked_function):
         self.subscriber.run_forever()
         assert mocked_function.called
