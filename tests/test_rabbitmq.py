@@ -73,13 +73,13 @@ class TestRabbitMQSubscriber(object):
     @mock.patch('qpaca.backend.rabbitmq.RabbitMQSubscriber._create_exchange')
     @mock.patch('qpaca.backend.rabbitmq.RabbitMQSubscriber._create_queue')
     def test_call_create_queue(self, mocked_exchange, mocked_queue):
-        self.subscriber.start()
+        self.subscriber.start(callback=mock.Mock())
         assert mocked_queue.called
 
     @mock.patch('qpaca.backend.rabbitmq.RabbitMQSubscriber._create_exchange')
     @mock.patch('qpaca.backend.rabbitmq.RabbitMQSubscriber._create_queue')
     def test_call_create_exchange(self, mocked_exchange, mocked_queue):
-        self.subscriber.start()
+        self.subscriber.start(callback=mock.Mock())
         assert mocked_exchange.called
 
     def test_ack_message_on_message(self):
@@ -91,6 +91,10 @@ class TestRabbitMQSubscriber(object):
     def test_call_monitor_on_message(self):
         self.subscriber.on_message(body=None, message=mock.Mock())
         assert self.subscriber.monitor.write.called
+
+    def test_call_callback_on_message(self):
+        self.subscriber.on_message(body=None, message=mock.Mock())
+        assert self.subscriber._callback.called
 
     def test_return_get_consumers(self):
         self.subscriber.config = {'consumer': {}}
