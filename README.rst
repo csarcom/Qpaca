@@ -1,7 +1,7 @@
-.. image:: https://travis-ci.org/WeLikeAlpacas/qpacab.svg
-    :target: https://travis-ci.org/WeLikeAlpacas/qpaca
-.. image:: https://coveralls.io/repos/WeLikeAlpacas/qpaca/badge.svg?branch=master&service=github
-  :target: https://coveralls.io/github/WeLikeAlpacas/qpaca?branch=master
+.. image:: https://travis-ci.org/WeLikeAlpacas/Qpaca.svg
+    :target: https://travis-ci.org/WeLikeAlpacas/Qpaca
+.. image:: https://coveralls.io/repos/WeLikeAlpacas/Qpaca/badge.svg?branch=master&service=github
+  :target: https://coveralls.io/github/WeLikeAlpacas/Qpaca?branch=master
 
 =====
 Qpaca
