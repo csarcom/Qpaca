@@ -54,8 +54,7 @@ Scale subscribers::
 Running tests
 -------------
 
-	docker run -it --rm -v /$(pwd):/app csarcom/qpaca bash
-	py.test tests
+	docker run -it --rm -v /$(pwd):/app csarcom/qpaca py.test tests
 
 Build Qpaca
 -----------
