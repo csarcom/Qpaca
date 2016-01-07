@@ -13,6 +13,8 @@ Build and Run
 
 We can run Qpaca using normal docker containers or docker-compose
 
+**To run the following commands you need either be root or member of docker user group on your OS.**
+
 Docker Containers
 -----------------
 
