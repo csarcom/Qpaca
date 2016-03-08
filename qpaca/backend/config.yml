@@ -7,7 +7,7 @@ rabbitmq:
                 confirm_publish: True
 
         exchange:
-            name: qpaca-exhange
+            name: qpaca-exchange
             type: direct
             durable: True
             auto_delete: False

@@ -53,12 +53,13 @@ class RabbitMQSubscriber(ConsumerMixin, BaseSubscriber, RabbitMQHandler):
         self.monitor = InfluxDB(
             'subscriber', config or get_config('monitoring').get('influxdb'))
 
-    def start(self):
+    def start(self, callback):
         """Create everything necessary to receive a message"""
 
         logger.debug('Starting RabbitMQ Subscriber')
         self._exchange = self._create_exchange()
         self._queue = self._create_queue()
+        self._callback = callback
 
     def run_forever(self):
         """Call kombu.ConsumerMixin run function
@@ -79,6 +80,7 @@ class RabbitMQSubscriber(ConsumerMixin, BaseSubscriber, RabbitMQHandler):
         """it is called every time a new message is received"""
 
         logger.info('Message received: {0}'.format(body))
+        self._callback(body, message)
         message.ack()
 
         point = (datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f'"), 1)
