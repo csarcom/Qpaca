@@ -7,3 +7,4 @@ grafana/sessions
 qpaca/.cache
 tests/.cache
 tests/__pycache__
+.vscode/
